@@ -22,6 +22,7 @@ double inputX(){
 
 void output(int count, double results[]){
     FILE *f = fopen(OUTPUT_FILE, "w");
+    int i;
 
     if (f == NULL)
     {
@@ -29,7 +30,9 @@ void output(int count, double results[]){
         return;
     }
 
-    for(int i = 0; i < count; i++)
+    fprintf(f, "F: %d\n", count);
+
+    for(i = 0; i < count; i++)
     {
         fprintf(f, "%d: %lf\n", i+1, results[i]);
     }
@@ -52,12 +55,7 @@ int f(double current, int i, double x, double eps, double results[]){
     } else if ( -eps < current - next && current - next < eps){
         return 0;
     } else {
-        results[i] = next;
+        results[i] = current;
         return f(next, i+1, x, eps, results) + 1;
     }
-
-    results[i] = current;
-    printf("Result %d: %lf \n", i, current);
-
-    return f(next, i + 1, x, eps, results) + 1;
 }
